@@ -14,12 +14,6 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var statuses = []string{
-	"done",
-	"todo",
-	"in-progress",
-}
-
 func main() {
 	args := os.Args
 	args = slices.Delete(args, 0, 1)
