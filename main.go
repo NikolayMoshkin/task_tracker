@@ -36,7 +36,8 @@ func main() {
 	case "file":
 		handler, err = store.NewFileHandler()
 	case "db":
-		handler, err = store.NewDBHandler()
+		connStr := os.Getenv("DB_CONNECT")
+		handler, err = store.NewDBHandler(connStr)
 	default:
 		fmt.Println("Invalid mode")
 		os.Exit(1)
@@ -50,8 +51,8 @@ func main() {
 
 	job, err := cr.NewJob(command)
 	if err != nil {
-		if errors.Is(err, service.InvalidJobError) { // тестирую обертки ошибок
-			log.Fatalf("Ошибка валидации: %s", err)
+		if errors.Is(err, service.InvalidJobError) { // test error wrapping
+			log.Fatalf("Validation error: %s", err)
 		}
 		log.Fatal(err)
 	}

@@ -69,21 +69,21 @@ func (h *FileHandler) Update(id int, field string, val string) error {
 
 	var data []byte
 	var updated bool
-	for _, task := range tasks {
-		if task.Id != id {
+	for i := range tasks {
+		if tasks[i].Id != id {
 			continue
 		}
 		switch field {
 		case "name":
-			task.Name = val
+			tasks[i].Name = val
 		case "status":
-			task.Status = val
+			tasks[i].Status = val
 		default:
 			return errors.New("unknown task field: " + field)
 		}
 
 		now := time.Now()
-		task.UpdatedAt = &now
+		tasks[i].UpdatedAt = &now
 
 		data, err = json.Marshal(tasks)
 		if err != nil {
@@ -199,7 +199,7 @@ func (h *FileHandler) hasData(f *os.File) bool {
 }
 
 // read all data and spit by tasks
-func (h *FileHandler) getTasks(f *os.File) ([]*model.Task, error) {
+func (h *FileHandler) getTasks(f *os.File) ([]model.Task, error) {
 	if _, err := f.Seek(0, 0); err != nil {
 		return nil, err
 	}
@@ -210,10 +210,10 @@ func (h *FileHandler) getTasks(f *os.File) ([]*model.Task, error) {
 	}
 
 	if len(bytes.TrimSpace(data)) == 0 {
-		return []*model.Task{}, nil
+		return []model.Task{}, nil
 	}
 
-	var tasks []*model.Task
+	var tasks []model.Task
 	if err := json.Unmarshal(data, &tasks); err != nil {
 		return nil, err
 	}
@@ -247,7 +247,7 @@ func (h *FileHandler) addTask(f *os.File, t *model.Task) error {
 		return err
 	}
 
-	tasks = append(tasks, t)
+	tasks = append(tasks, *t)
 
 	data, err := json.Marshal(tasks)
 	if err != nil {
@@ -267,7 +267,7 @@ func (h *FileHandler) addTask(f *os.File, t *model.Task) error {
 	return nil
 }
 
-func (h *FileHandler) Select(field string, val string) ([]*model.Task, error) {
+func (h *FileHandler) Select(field string, val string) ([]model.Task, error) {
 	f, close, err := h.getFile()
 	if err != nil {
 		return nil, err
@@ -282,7 +282,7 @@ func (h *FileHandler) Select(field string, val string) ([]*model.Task, error) {
 		return tasks, nil
 	}
 
-	var res []*model.Task
+	var res []model.Task
 	for _, task := range tasks {
 		switch field {
 		case "name":

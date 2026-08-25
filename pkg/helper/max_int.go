@@ -5,7 +5,7 @@ import (
 	"task_tracker/pkg/model"
 )
 
-func MaxKey(arr []*model.Task) (int, error) {
+func MaxKey(arr []model.Task) (int, error) {
 	if len(arr) == 0 {
 		return 0, errors.New("Map is empty")
 	}
