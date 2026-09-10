@@ -4,7 +4,7 @@ It can work with a JSON file or a database. See env.example.
 
 ### Init
 
-go build ./
+go build ./cmd
 
 ### Adding a new task
 task-tracker add "Buy groceries"

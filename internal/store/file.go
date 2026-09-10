@@ -14,13 +14,15 @@ import (
 	"time"
 )
 
+const DEFAULT_FILE_PATH = "./internal/store/file/tasks.json"
+
 type FileHandler struct {
 	filename string
 	file     *os.File
 }
 
 func NewFileHandler(filename ...string) (DataHandler, error) {
-	fn := "tasks.json" // default filename
+	fn := DEFAULT_FILE_PATH // default filename
 	if len(filename) > 0 {
 		fn = filename[0]
 	}
