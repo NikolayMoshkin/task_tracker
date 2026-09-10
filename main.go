@@ -7,9 +7,9 @@ import (
 	"log"
 	"os"
 	"slices"
-	"task_tracker/pkg/model"
-	"task_tracker/pkg/service"
-	"task_tracker/pkg/store"
+	"task-tracker/pkg/model"
+	"task-tracker/pkg/service"
+	"task-tracker/pkg/store"
 
 	"github.com/joho/godotenv"
 )
@@ -43,6 +43,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	err = handler.Init()
 	if err != nil {
 		log.Fatal(err)
 	}

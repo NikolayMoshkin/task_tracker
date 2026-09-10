@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 	"strings"
-	"task_tracker/pkg/helper"
-	"task_tracker/pkg/store"
+	"task-tracker/pkg/helper"
+	"task-tracker/pkg/store"
 	"time"
 )
 

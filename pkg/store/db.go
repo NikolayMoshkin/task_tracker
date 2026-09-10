@@ -3,7 +3,7 @@ package store
 import (
 	"errors"
 	"fmt"
-	"task_tracker/pkg/model"
+	"task-tracker/pkg/model"
 	"time"
 
 	"github.com/jmoiron/sqlx"
@@ -35,9 +35,18 @@ func NewDBHandler(connStr string) (DataHandler, error) {
 		return nil, err
 	}
 
-	db.MustExec(schema)
-
 	return &DBHandler{db}, nil
+}
+
+func (h *DBHandler) Init() error {
+	err := h.db.Ping()
+	if err != nil {
+		return err
+	}
+
+	h.db.MustExec(schema)
+
+	return nil
 }
 
 // returns id of a new task

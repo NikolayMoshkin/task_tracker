@@ -9,8 +9,8 @@ import (
 	"log"
 	"os"
 	"slices"
-	"task_tracker/pkg/helper"
-	"task_tracker/pkg/model"
+	"task-tracker/pkg/helper"
+	"task-tracker/pkg/model"
 	"time"
 )
 
@@ -28,6 +28,15 @@ func NewFileHandler(filename ...string) (DataHandler, error) {
 	return &FileHandler{
 		filename: fn,
 	}, nil
+}
+
+func (h *FileHandler) Init() error {
+	_, _, err := h.getFile()
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // returns id of a new task

@@ -6,9 +6,9 @@ import (
 	"maps"
 	"slices"
 	"strings"
-	"task_tracker/pkg/job"
-	"task_tracker/pkg/model"
-	"task_tracker/pkg/store"
+	"task-tracker/pkg/job"
+	"task-tracker/pkg/model"
+	"task-tracker/pkg/store"
 )
 
 var InvalidJobError = errors.New("Invalid job")
@@ -22,6 +22,7 @@ func NewCreator(h store.DataHandler) *Creator {
 		jobs: make(map[string]job.Executable),
 	}
 
+	// method set. Интерфейс Executable имплементирован только для указателей на джобы, а не на сами джобы
 	updateJob := job.NewUpdateJob(h)
 	addJob := job.NewAddJob(h)
 	deleteJob := job.NewDeleteJob(h)
