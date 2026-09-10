@@ -3,7 +3,7 @@ package store
 import (
 	"errors"
 	"fmt"
-	"task-tracker/pkg/model"
+	"task-tracker/internal/model"
 	"time"
 
 	"github.com/jmoiron/sqlx"

@@ -6,9 +6,9 @@ import (
 	"maps"
 	"slices"
 	"strings"
-	"task-tracker/pkg/job"
-	"task-tracker/pkg/model"
-	"task-tracker/pkg/store"
+	"task-tracker/internal/job"
+	"task-tracker/internal/model"
+	"task-tracker/internal/store"
 )
 
 var InvalidJobError = errors.New("Invalid job")

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 	"strings"
-	"task-tracker/pkg/model"
-	"task-tracker/pkg/store"
+	"task-tracker/internal/model"
+	"task-tracker/internal/store"
 )
 
 type Add struct {

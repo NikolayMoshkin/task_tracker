@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 	"strings"
-	"task-tracker/pkg/store"
+	"task-tracker/internal/store"
 )
 
 type MarkDone struct {

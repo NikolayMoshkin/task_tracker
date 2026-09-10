@@ -1,6 +1,6 @@
 package store
 
-import "task-tracker/pkg/model"
+import "task-tracker/internal/model"
 
 type DataHandler interface {
 	Init() error

@@ -9,8 +9,8 @@ import (
 	"log"
 	"os"
 	"slices"
-	"task-tracker/pkg/helper"
-	"task-tracker/pkg/model"
+	"task-tracker/internal/helper"
+	"task-tracker/internal/model"
 	"time"
 )
 

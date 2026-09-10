@@ -2,7 +2,7 @@ package helper
 
 import (
 	"errors"
-	"task-tracker/pkg/model"
+	"task-tracker/internal/model"
 )
 
 func MaxKey(arr []model.Task) (int, error) {

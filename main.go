@@ -7,9 +7,9 @@ import (
 	"log"
 	"os"
 	"slices"
-	"task-tracker/pkg/model"
-	"task-tracker/pkg/service"
-	"task-tracker/pkg/store"
+	"task-tracker/internal/model"
+	"task-tracker/internal/service"
+	"task-tracker/internal/store"
 
 	"github.com/joho/godotenv"
 )
