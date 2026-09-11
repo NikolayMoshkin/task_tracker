@@ -5,25 +5,26 @@ import (
 	"io"
 	"strconv"
 	"strings"
+	app_errors "task-tracker/internal/err"
 	"task-tracker/internal/store"
 )
 
 type MarkDone struct {
-	name    string
+	name    JobType
 	handler store.DataHandler
 }
 
 func NewMarkDoneJob(h store.DataHandler) *MarkDone {
-	return &MarkDone{"mark-done", h}
+	return &MarkDone{MARK_DONE, h}
 }
 
-func (j *MarkDone) Name() string {
+func (j *MarkDone) Name() JobType {
 	return j.name
 }
 
 func (j *MarkDone) Execute(params []string) (io.Reader, error) {
 	if len(params) != 1 {
-		return nil, fmt.Errorf("%w. Invalid amount of args", InvalidArgs)
+		return nil, fmt.Errorf("%w. Invalid amount of args", app_errors.InvalidArgs)
 	}
 
 	id, err := strconv.Atoi(params[0])
@@ -40,4 +41,4 @@ func (j *MarkDone) Execute(params []string) (io.Reader, error) {
 	return strings.NewReader(output), nil
 }
 
-var _ Executable = (*MarkDone)(nil)
+var _ Job = (*MarkDone)(nil)

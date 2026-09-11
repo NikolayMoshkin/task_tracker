@@ -3,23 +3,20 @@ package service
 import (
 	"errors"
 	"fmt"
-	"maps"
-	"slices"
 	"strings"
 	"task-tracker/internal/job"
-	"task-tracker/internal/model"
 	"task-tracker/internal/store"
 )
 
 var InvalidJobError = errors.New("Invalid job")
 
 type Creator struct {
-	jobs map[string]job.Executable
+	jobs map[job.JobType]job.Job
 }
 
 func NewCreator(h store.DataHandler) *Creator {
 	cr := &Creator{
-		jobs: make(map[string]job.Executable),
+		jobs: make(map[job.JobType]job.Job),
 	}
 
 	// method set. Интерфейс Executable имплементирован только для указателей на джобы, а не на сами джобы
@@ -40,12 +37,17 @@ func NewCreator(h store.DataHandler) *Creator {
 	return cr
 }
 
-func (cr *Creator) NewJob(cmd *model.Command) (job.Executable, error) {
-	if job, ok := cr.jobs[cmd.Name()]; ok {
+func (cr *Creator) NewJob(jobName job.JobType) (job.Job, error) {
+	if job, ok := cr.jobs[jobName]; ok {
 		return job, nil
 	}
 
-	keys := strings.Join(slices.Collect(maps.Keys(cr.jobs)), ",")
+	avJobs := []string{}
+	for _, job := range cr.jobs {
+		avJobs = append(avJobs, string(job.Name()))
+	}
 
-	return nil, fmt.Errorf("%w \"%s\". Available jobs: %s", InvalidJobError, cmd.Name(), keys)
+	keys := strings.Join(avJobs, ",")
+
+	return nil, fmt.Errorf("%w \"%s\". Available jobs: %s", InvalidJobError, jobName, keys)
 }

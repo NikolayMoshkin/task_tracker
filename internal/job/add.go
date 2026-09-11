@@ -4,26 +4,32 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	app_errors "task-tracker/internal/err"
 	"task-tracker/internal/model"
 	"task-tracker/internal/store"
 )
 
 type Add struct {
-	name    string
+	name    JobType
 	handler store.DataHandler
 }
 
 func NewAddJob(h store.DataHandler) *Add {
-	return &Add{"add", h}
+	return &Add{ADD, h}
 }
 
-func (j *Add) Name() string {
+func (j *Add) Name() JobType {
 	return j.name
 }
 
 func (j *Add) Execute(params []string) (io.Reader, error) {
 	if len(params) != 1 {
-		return nil, fmt.Errorf("%w. Invalid amount of args", InvalidArgs)
+		return nil, fmt.Errorf("%w. Invalid amount of args", app_errors.InvalidArgs)
+	}
+
+	taskName := strings.TrimSpace(params[0])
+	if taskName == "" {
+		return nil, fmt.Errorf("Task name should not be empty%w", app_errors.InvalidArgs)
 	}
 
 	id, err := j.handler.Add(model.NewTask(params[0]))
@@ -36,4 +42,4 @@ func (j *Add) Execute(params []string) (io.Reader, error) {
 	return strings.NewReader(output), nil
 }
 
-var _ Executable = (*Add)(nil)
+var _ Job = (*Add)(nil)

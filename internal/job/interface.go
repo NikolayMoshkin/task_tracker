@@ -2,6 +2,7 @@ package job
 
 import "io"
 
-type Executable interface {
+type Job interface {
 	Execute(params []string) (io.Reader, error)
+	Name() JobType
 }

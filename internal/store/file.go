@@ -9,6 +9,7 @@ import (
 	"log"
 	"os"
 	"slices"
+	app_errors "task-tracker/internal/err"
 	"task-tracker/internal/helper"
 	"task-tracker/internal/model"
 	"time"
@@ -105,7 +106,7 @@ func (h *FileHandler) Update(id int, field string, val string) error {
 	}
 
 	if updated == false {
-		return fmt.Errorf("Task with id %d not found", id)
+		return fmt.Errorf("%wTask with id %d not found", app_errors.ValidationError, id)
 	}
 
 	err = os.Truncate(f.Name(), 0)
@@ -147,7 +148,7 @@ func (h *FileHandler) Delete(id int) error {
 	}
 
 	if updated == false {
-		return fmt.Errorf("Task with id %d not found", id)
+		return fmt.Errorf("%wTask with id %d not found", app_errors.InvalidArgs, id)
 	}
 
 	err = os.Truncate(f.Name(), 0)

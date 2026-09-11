@@ -4,27 +4,28 @@ import (
 	"fmt"
 	"io"
 	"strings"
+	app_errors "task-tracker/internal/err"
 	"task-tracker/internal/helper"
 	"task-tracker/internal/store"
 	"time"
 )
 
 type List struct {
-	name    string
+	name    JobType
 	handler store.DataHandler
 }
 
 func NewListJob(h store.DataHandler) *List {
-	return &List{"list", h}
+	return &List{LIST, h}
 }
 
-func (j *List) Name() string {
+func (j *List) Name() JobType {
 	return j.name
 }
 
 func (j *List) Execute(params []string) (io.Reader, error) {
 	if len(params) > 1 {
-		return nil, fmt.Errorf("%w. Invalid amount of args", InvalidArgs)
+		return nil, fmt.Errorf("%w. Invalid amount of args", app_errors.InvalidArgs)
 	}
 
 	val := ""
@@ -60,4 +61,4 @@ Updated at: %s
 	return strings.NewReader(output), nil
 }
 
-var _ Executable = (*List)(nil)
+var _ Job = (*List)(nil)

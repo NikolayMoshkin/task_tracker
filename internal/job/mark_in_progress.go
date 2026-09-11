@@ -5,25 +5,26 @@ import (
 	"io"
 	"strconv"
 	"strings"
+	app_errors "task-tracker/internal/err"
 	"task-tracker/internal/store"
 )
 
 type MarkInProgress struct {
-	name    string
+	name    JobType
 	handler store.DataHandler
 }
 
 func NewMarkInProgressJob(h store.DataHandler) *MarkInProgress {
-	return &MarkInProgress{"mark-in-progress", h}
+	return &MarkInProgress{MARK_IN_PROGRESS, h}
 }
 
-func (j *MarkInProgress) Name() string {
+func (j *MarkInProgress) Name() JobType {
 	return j.name
 }
 
 func (j *MarkInProgress) Execute(params []string) (io.Reader, error) {
 	if len(params) != 1 {
-		return nil, fmt.Errorf("%w. Invalid amount of args", InvalidArgs)
+		return nil, fmt.Errorf("%w. Invalid amount of args", app_errors.InvalidArgs)
 	}
 
 	id, err := strconv.Atoi(params[0])
@@ -40,4 +41,4 @@ func (j *MarkInProgress) Execute(params []string) (io.Reader, error) {
 	return strings.NewReader(output), nil
 }
 
-var _ Executable = (*MarkInProgress)(nil)
+var _ Job = (*MarkInProgress)(nil)

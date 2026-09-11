@@ -5,30 +5,31 @@ import (
 	"io"
 	"strconv"
 	"strings"
+	app_errors "task-tracker/internal/err"
 	"task-tracker/internal/store"
 )
 
 type Delete struct {
-	name    string
+	name    JobType
 	handler store.DataHandler
 }
 
 func NewDeleteJob(h store.DataHandler) *Delete {
-	return &Delete{"delete", h}
+	return &Delete{DELETE, h}
 }
 
-func (j *Delete) Name() string {
+func (j *Delete) Name() JobType {
 	return j.name
 }
 
 func (j *Delete) Execute(params []string) (io.Reader, error) {
 	if len(params) != 1 {
-		return nil, fmt.Errorf("%w. Invalid amount of args", InvalidArgs)
+		return nil, fmt.Errorf("%w. Invalid amount of args", app_errors.InvalidArgs)
 	}
 
 	id, err := strconv.Atoi(params[0])
 	if err != nil {
-		return nil, err
+		return nil, app_errors.InvalidArgs
 	}
 
 	if err := j.handler.Delete(id); err != nil {
@@ -40,4 +41,4 @@ func (j *Delete) Execute(params []string) (io.Reader, error) {
 	return strings.NewReader(output), nil
 }
 
-var _ Executable = (*Delete)(nil)
+var _ Job = (*Delete)(nil)
