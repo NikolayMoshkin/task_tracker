@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package task_tracker_pb;
+
+option go_package = "./task_tracker_pb";
+
+message AddRequest {
+    string name = 1;
+}
+
+message AddResponse {
+    string result = 1;
+}
+
+service TaskTrackerService{
+    // unary with deadline
+    rpc Add(AddRequest) returns (AddResponse);
+}
