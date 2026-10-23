@@ -13,7 +13,7 @@ import (
 	"os/signal"
 	"slices"
 	"syscall"
-	grpc_server "task-tracker/internal/gRPC/server"
+	task_tracker_grpc_server "task-tracker/internal/gRPC/server"
 	"task-tracker/internal/gRPC/task_tracker_pb"
 	"task-tracker/internal/job"
 	"task-tracker/internal/model"
@@ -152,7 +152,7 @@ func runGrpc(cr *service.Creator) {
 	}
 
 	s := grpc.NewServer()
-	task_tracker_pb.RegisterTaskTrackerServiceServer(s, grpc_server.NewServer(cr))
+	task_tracker_pb.RegisterTaskTrackerServiceServer(s, task_tracker_grpc_server.NewServer(cr))
 
 	// рефлексия для клиентов по типу evans/grpcurl
 	reflection.Register(s)
@@ -168,10 +168,29 @@ func runGrpc(cr *service.Creator) {
 
 	select {
 	case <-ctx.Done():
-		s.GracefulStop()
+		shutdownDone := make(chan struct{})
+		go func() {
+			s.GracefulStop()
+			close(shutdownDone)
+		}()
+
+		shutdownTimer := time.NewTimer(10 * time.Second)
+		defer shutdownTimer.Stop()
+
+		select {
+		case <-shutdownDone:
+		case <-shutdownTimer.C:
+			slog.Warn("gRPC graceful shutdown timed out; stopping server")
+			s.Stop()
+		}
+		// Добавляем проверку на ошибку после завершения сервера
+		err := <-serveErr
+		if err != nil && !errors.Is(err, grpc.ErrServerStopped) {
+			slog.Error("gRPC server stopped with error", "err", err)
+		}
 	case err := <-serveErr:
-		if err != nil {
-			log.Printf("gRPC server error: %v", err)
+		if err != nil && !errors.Is(err, grpc.ErrServerStopped) {
+			slog.Error("gRPC server stopped with error", "err", err)
 		}
 	}
 }
