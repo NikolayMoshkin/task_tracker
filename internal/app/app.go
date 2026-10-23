@@ -7,11 +7,14 @@ import (
 	"io"
 	"log"
 	"log/slog"
+	"net"
 	"net/http"
 	"os"
 	"os/signal"
 	"slices"
 	"syscall"
+	grpc_server "task-tracker/internal/gRPC/server"
+	"task-tracker/internal/gRPC/task_tracker_pb"
 	"task-tracker/internal/job"
 	"task-tracker/internal/model"
 	"task-tracker/internal/service"
@@ -20,6 +23,8 @@ import (
 	"time"
 
 	"github.com/joho/godotenv"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/reflection"
 )
 
 type App struct {
@@ -68,6 +73,8 @@ func (app *App) Run() {
 		runHttp(cr)
 	case "cli":
 		runCli(cr)
+	case "grpc":
+		runGrpc(cr)
 	}
 }
 
@@ -136,4 +143,35 @@ func runCli(cr *service.Creator) {
 	}
 
 	io.Copy(os.Stdout, output)
+}
+
+func runGrpc(cr *service.Creator) {
+	lis, err := net.Listen("tcp", "0.0.0.0:50051") // default port for gRPC
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	s := grpc.NewServer()
+	task_tracker_pb.RegisterTaskTrackerServiceServer(s, grpc_server.NewServer(cr))
+
+	// рефлексия для клиентов по типу evans/grpcurl
+	reflection.Register(s)
+
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+
+	serveErr := make(chan error, 1)
+	go func() {
+		fmt.Printf("gRPC server listening on %s\n", lis.Addr())
+		serveErr <- s.Serve(lis)
+	}()
+
+	select {
+	case <-ctx.Done():
+		s.GracefulStop()
+	case err := <-serveErr:
+		if err != nil {
+			log.Printf("gRPC server error: %v", err)
+		}
+	}
 }
