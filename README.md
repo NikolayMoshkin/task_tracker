@@ -1,6 +1,6 @@
 Task tracker. Educational go project.
 
-It can work with a JSON file or a database. The application runs in CLI or HTTP mode. See `env.example`.
+It can work with a JSON file or a database. The application runs in CLI, HTTP, or gRPC mode. See `env.example`.
 
 ### Configuration
 
@@ -8,7 +8,7 @@ Copy `env.example` to `.env` and adjust values:
 
 | Variable     | Values       | Description                                      |
 |--------------|--------------|--------------------------------------------------|
-| `MODE`       | `cli`, `http` | How to run the application                      |
+| `MODE`       | `cli`, `http`, `grpc` | How to run the application                |
 | `STORE`      | `file`, `db` | Where tasks are stored                           |
 | `DB_CONNECT` | connection string | PostgreSQL DSN (required when `STORE=db`) |
 
@@ -89,4 +89,59 @@ curl -X DELETE http://localhost:8080/delete/1
 
 curl -X POST http://localhost:8080/mark-in-progress/1
 curl -X POST http://localhost:8080/mark-done/1
+```
+
+### gRPC mode
+
+Set `MODE=grpc` in `.env` and start the server:
+
+```bash
+task-tracker
+```
+
+The gRPC server listens on `localhost:50051`. Server reflection is enabled, so
+you can inspect and call the service with [`grpcurl`](https://github.com/fullstorydev/grpcurl)
+using `-plaintext` (the server does not configure TLS).
+
+The service is defined in [`internal/gRPC/task_tracker.proto`](internal/gRPC/task_tracker.proto).
+It provides these RPC methods:
+
+| Method           | Request fields      | Description                         |
+|------------------|---------------------|-------------------------------------|
+| `Add`            | `name`              | Create a task                       |
+| `List`           | `status`            | List all tasks or filter by status  |
+| `Update`         | `id`, `name`         | Rename a task                       |
+| `Delete`         | `id`                | Delete a task                       |
+| `MarkDone`       | `id`                | Mark a task as done                 |
+| `MarkInProgress` | `id`                | Mark a task as in progress          |
+
+Example calls:
+
+```bash
+# List all tasks
+grpcurl -plaintext -d '{}' localhost:50051 task_tracker_pb.TaskTrackerService/List
+
+# List tasks by status
+grpcurl -plaintext -d '{"status":"done"}' localhost:50051 task_tracker_pb.TaskTrackerService/List
+
+# Add a task
+grpcurl -plaintext -d '{"name":"Buy groceries"}' localhost:50051 task_tracker_pb.TaskTrackerService/Add
+
+# Update and delete a task
+grpcurl -plaintext -d '{"id":1,"name":"Buy groceries and cook dinner"}' \
+  localhost:50051 task_tracker_pb.TaskTrackerService/Update
+grpcurl -plaintext -d '{"id":1}' localhost:50051 task_tracker_pb.TaskTrackerService/Delete
+
+# Change task status
+grpcurl -plaintext -d '{"id":1}' localhost:50051 task_tracker_pb.TaskTrackerService/MarkInProgress
+grpcurl -plaintext -d '{"id":1}' localhost:50051 task_tracker_pb.TaskTrackerService/MarkDone
+```
+
+To regenerate the Go code after changing the protocol, run the generation script
+from the `internal/gRPC` directory (requires `protoc`, `protoc-gen-go`, and
+`protoc-gen-go-grpc`):
+
+```bash
+cd internal/gRPC
+bash generate.sh
 ```
