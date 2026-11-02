@@ -197,6 +197,366 @@ func (x *ListResponse) GetTasks() string {
 	return ""
 }
 
+type UpdateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateRequest) Reset() {
+	*x = UpdateRequest{}
+	mi := &file_task_tracker_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateRequest) ProtoMessage() {}
+
+func (x *UpdateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateRequest.ProtoReflect.Descriptor instead.
+func (*UpdateRequest) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *UpdateRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *UpdateRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+type UpdateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        string                 `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateResponse) Reset() {
+	*x = UpdateResponse{}
+	mi := &file_task_tracker_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateResponse) ProtoMessage() {}
+
+func (x *UpdateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateResponse.ProtoReflect.Descriptor instead.
+func (*UpdateResponse) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *UpdateResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
+type DeleteRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteRequest) Reset() {
+	*x = DeleteRequest{}
+	mi := &file_task_tracker_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteRequest) ProtoMessage() {}
+
+func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
+func (*DeleteRequest) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *DeleteRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type DeleteResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        string                 `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteResponse) Reset() {
+	*x = DeleteResponse{}
+	mi := &file_task_tracker_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteResponse) ProtoMessage() {}
+
+func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
+func (*DeleteResponse) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *DeleteResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
+type MarkDoneRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MarkDoneRequest) Reset() {
+	*x = MarkDoneRequest{}
+	mi := &file_task_tracker_proto_msgTypes[8]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MarkDoneRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MarkDoneRequest) ProtoMessage() {}
+
+func (x *MarkDoneRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[8]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MarkDoneRequest.ProtoReflect.Descriptor instead.
+func (*MarkDoneRequest) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{8}
+}
+
+func (x *MarkDoneRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type MarkDoneResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        string                 `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MarkDoneResponse) Reset() {
+	*x = MarkDoneResponse{}
+	mi := &file_task_tracker_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MarkDoneResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MarkDoneResponse) ProtoMessage() {}
+
+func (x *MarkDoneResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MarkDoneResponse.ProtoReflect.Descriptor instead.
+func (*MarkDoneResponse) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *MarkDoneResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
+type MarkInProgressRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            uint64                 `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MarkInProgressRequest) Reset() {
+	*x = MarkInProgressRequest{}
+	mi := &file_task_tracker_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MarkInProgressRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MarkInProgressRequest) ProtoMessage() {}
+
+func (x *MarkInProgressRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MarkInProgressRequest.ProtoReflect.Descriptor instead.
+func (*MarkInProgressRequest) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *MarkInProgressRequest) GetId() uint64 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+type MarkInProgressResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Result        string                 `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *MarkInProgressResponse) Reset() {
+	*x = MarkInProgressResponse{}
+	mi := &file_task_tracker_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *MarkInProgressResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*MarkInProgressResponse) ProtoMessage() {}
+
+func (x *MarkInProgressResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_task_tracker_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use MarkInProgressResponse.ProtoReflect.Descriptor instead.
+func (*MarkInProgressResponse) Descriptor() ([]byte, []int) {
+	return file_task_tracker_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *MarkInProgressResponse) GetResult() string {
+	if x != nil {
+		return x.Result
+	}
+	return ""
+}
+
 var File_task_tracker_proto protoreflect.FileDescriptor
 
 const file_task_tracker_proto_rawDesc = "" +
@@ -210,10 +570,31 @@ const file_task_tracker_proto_rawDesc = "" +
 	"\vListRequest\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\"$\n" +
 	"\fListResponse\x12\x14\n" +
-	"\x05tasks\x18\x01 \x01(\tR\x05tasks2\x9b\x01\n" +
+	"\x05tasks\x18\x01 \x01(\tR\x05tasks\"3\n" +
+	"\rUpdateRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"(\n" +
+	"\x0eUpdateResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\tR\x06result\"\x1f\n" +
+	"\rDeleteRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\"(\n" +
+	"\x0eDeleteResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\tR\x06result\"!\n" +
+	"\x0fMarkDoneRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\"*\n" +
+	"\x10MarkDoneResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\tR\x06result\"'\n" +
+	"\x15MarkInProgressRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x04R\x02id\"0\n" +
+	"\x16MarkInProgressResponse\x12\x16\n" +
+	"\x06result\x18\x01 \x01(\tR\x06result2\xe5\x03\n" +
 	"\x12TaskTrackerService\x12@\n" +
 	"\x03Add\x12\x1b.task_tracker_pb.AddRequest\x1a\x1c.task_tracker_pb.AddResponse\x12C\n" +
-	"\x04List\x12\x1c.task_tracker_pb.ListRequest\x1a\x1d.task_tracker_pb.ListResponseB\x13Z\x11./task_tracker_pbb\x06proto3"
+	"\x04List\x12\x1c.task_tracker_pb.ListRequest\x1a\x1d.task_tracker_pb.ListResponse\x12I\n" +
+	"\x06Update\x12\x1e.task_tracker_pb.UpdateRequest\x1a\x1f.task_tracker_pb.UpdateResponse\x12I\n" +
+	"\x06Delete\x12\x1e.task_tracker_pb.DeleteRequest\x1a\x1f.task_tracker_pb.DeleteResponse\x12O\n" +
+	"\bMarkDone\x12 .task_tracker_pb.MarkDoneRequest\x1a!.task_tracker_pb.MarkDoneResponse\x12a\n" +
+	"\x0eMarkInProgress\x12&.task_tracker_pb.MarkInProgressRequest\x1a'.task_tracker_pb.MarkInProgressResponseB\x13Z\x11./task_tracker_pbb\x06proto3"
 
 var (
 	file_task_tracker_proto_rawDescOnce sync.Once
@@ -227,23 +608,39 @@ func file_task_tracker_proto_rawDescGZIP() []byte {
 	return file_task_tracker_proto_rawDescData
 }
 
-var file_task_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_task_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 12)
 var file_task_tracker_proto_goTypes = []any{
-	(*AddRequest)(nil),   // 0: task_tracker_pb.AddRequest
-	(*AddResponse)(nil),  // 1: task_tracker_pb.AddResponse
-	(*ListRequest)(nil),  // 2: task_tracker_pb.ListRequest
-	(*ListResponse)(nil), // 3: task_tracker_pb.ListResponse
+	(*AddRequest)(nil),             // 0: task_tracker_pb.AddRequest
+	(*AddResponse)(nil),            // 1: task_tracker_pb.AddResponse
+	(*ListRequest)(nil),            // 2: task_tracker_pb.ListRequest
+	(*ListResponse)(nil),           // 3: task_tracker_pb.ListResponse
+	(*UpdateRequest)(nil),          // 4: task_tracker_pb.UpdateRequest
+	(*UpdateResponse)(nil),         // 5: task_tracker_pb.UpdateResponse
+	(*DeleteRequest)(nil),          // 6: task_tracker_pb.DeleteRequest
+	(*DeleteResponse)(nil),         // 7: task_tracker_pb.DeleteResponse
+	(*MarkDoneRequest)(nil),        // 8: task_tracker_pb.MarkDoneRequest
+	(*MarkDoneResponse)(nil),       // 9: task_tracker_pb.MarkDoneResponse
+	(*MarkInProgressRequest)(nil),  // 10: task_tracker_pb.MarkInProgressRequest
+	(*MarkInProgressResponse)(nil), // 11: task_tracker_pb.MarkInProgressResponse
 }
 var file_task_tracker_proto_depIdxs = []int32{
-	0, // 0: task_tracker_pb.TaskTrackerService.Add:input_type -> task_tracker_pb.AddRequest
-	2, // 1: task_tracker_pb.TaskTrackerService.List:input_type -> task_tracker_pb.ListRequest
-	1, // 2: task_tracker_pb.TaskTrackerService.Add:output_type -> task_tracker_pb.AddResponse
-	3, // 3: task_tracker_pb.TaskTrackerService.List:output_type -> task_tracker_pb.ListResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	0,  // 0: task_tracker_pb.TaskTrackerService.Add:input_type -> task_tracker_pb.AddRequest
+	2,  // 1: task_tracker_pb.TaskTrackerService.List:input_type -> task_tracker_pb.ListRequest
+	4,  // 2: task_tracker_pb.TaskTrackerService.Update:input_type -> task_tracker_pb.UpdateRequest
+	6,  // 3: task_tracker_pb.TaskTrackerService.Delete:input_type -> task_tracker_pb.DeleteRequest
+	8,  // 4: task_tracker_pb.TaskTrackerService.MarkDone:input_type -> task_tracker_pb.MarkDoneRequest
+	10, // 5: task_tracker_pb.TaskTrackerService.MarkInProgress:input_type -> task_tracker_pb.MarkInProgressRequest
+	1,  // 6: task_tracker_pb.TaskTrackerService.Add:output_type -> task_tracker_pb.AddResponse
+	3,  // 7: task_tracker_pb.TaskTrackerService.List:output_type -> task_tracker_pb.ListResponse
+	5,  // 8: task_tracker_pb.TaskTrackerService.Update:output_type -> task_tracker_pb.UpdateResponse
+	7,  // 9: task_tracker_pb.TaskTrackerService.Delete:output_type -> task_tracker_pb.DeleteResponse
+	9,  // 10: task_tracker_pb.TaskTrackerService.MarkDone:output_type -> task_tracker_pb.MarkDoneResponse
+	11, // 11: task_tracker_pb.TaskTrackerService.MarkInProgress:output_type -> task_tracker_pb.MarkInProgressResponse
+	6,  // [6:12] is the sub-list for method output_type
+	0,  // [0:6] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_task_tracker_proto_init() }
@@ -257,7 +654,7 @@ func file_task_tracker_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_task_tracker_proto_rawDesc), len(file_task_tracker_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   12,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

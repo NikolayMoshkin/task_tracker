@@ -19,8 +19,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TaskTrackerService_Add_FullMethodName  = "/task_tracker_pb.TaskTrackerService/Add"
-	TaskTrackerService_List_FullMethodName = "/task_tracker_pb.TaskTrackerService/List"
+	TaskTrackerService_Add_FullMethodName            = "/task_tracker_pb.TaskTrackerService/Add"
+	TaskTrackerService_List_FullMethodName           = "/task_tracker_pb.TaskTrackerService/List"
+	TaskTrackerService_Update_FullMethodName         = "/task_tracker_pb.TaskTrackerService/Update"
+	TaskTrackerService_Delete_FullMethodName         = "/task_tracker_pb.TaskTrackerService/Delete"
+	TaskTrackerService_MarkDone_FullMethodName       = "/task_tracker_pb.TaskTrackerService/MarkDone"
+	TaskTrackerService_MarkInProgress_FullMethodName = "/task_tracker_pb.TaskTrackerService/MarkInProgress"
 )
 
 // TaskTrackerServiceClient is the client API for TaskTrackerService service.
@@ -29,6 +33,10 @@ const (
 type TaskTrackerServiceClient interface {
 	Add(ctx context.Context, in *AddRequest, opts ...grpc.CallOption) (*AddResponse, error)
 	List(ctx context.Context, in *ListRequest, opts ...grpc.CallOption) (*ListResponse, error)
+	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	MarkDone(ctx context.Context, in *MarkDoneRequest, opts ...grpc.CallOption) (*MarkDoneResponse, error)
+	MarkInProgress(ctx context.Context, in *MarkInProgressRequest, opts ...grpc.CallOption) (*MarkInProgressResponse, error)
 }
 
 type taskTrackerServiceClient struct {
@@ -59,12 +67,56 @@ func (c *taskTrackerServiceClient) List(ctx context.Context, in *ListRequest, op
 	return out, nil
 }
 
+func (c *taskTrackerServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*UpdateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateResponse)
+	err := c.cc.Invoke(ctx, TaskTrackerService_Update_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taskTrackerServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(DeleteResponse)
+	err := c.cc.Invoke(ctx, TaskTrackerService_Delete_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taskTrackerServiceClient) MarkDone(ctx context.Context, in *MarkDoneRequest, opts ...grpc.CallOption) (*MarkDoneResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MarkDoneResponse)
+	err := c.cc.Invoke(ctx, TaskTrackerService_MarkDone_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *taskTrackerServiceClient) MarkInProgress(ctx context.Context, in *MarkInProgressRequest, opts ...grpc.CallOption) (*MarkInProgressResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(MarkInProgressResponse)
+	err := c.cc.Invoke(ctx, TaskTrackerService_MarkInProgress_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // TaskTrackerServiceServer is the server API for TaskTrackerService service.
 // All implementations must embed UnimplementedTaskTrackerServiceServer
 // for forward compatibility.
 type TaskTrackerServiceServer interface {
 	Add(context.Context, *AddRequest) (*AddResponse, error)
 	List(context.Context, *ListRequest) (*ListResponse, error)
+	Update(context.Context, *UpdateRequest) (*UpdateResponse, error)
+	Delete(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	MarkDone(context.Context, *MarkDoneRequest) (*MarkDoneResponse, error)
+	MarkInProgress(context.Context, *MarkInProgressRequest) (*MarkInProgressResponse, error)
 	mustEmbedUnimplementedTaskTrackerServiceServer()
 }
 
@@ -80,6 +132,18 @@ func (UnimplementedTaskTrackerServiceServer) Add(context.Context, *AddRequest) (
 }
 func (UnimplementedTaskTrackerServiceServer) List(context.Context, *ListRequest) (*ListResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method List not implemented")
+}
+func (UnimplementedTaskTrackerServiceServer) Update(context.Context, *UpdateRequest) (*UpdateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Update not implemented")
+}
+func (UnimplementedTaskTrackerServiceServer) Delete(context.Context, *DeleteRequest) (*DeleteResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedTaskTrackerServiceServer) MarkDone(context.Context, *MarkDoneRequest) (*MarkDoneResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method MarkDone not implemented")
+}
+func (UnimplementedTaskTrackerServiceServer) MarkInProgress(context.Context, *MarkInProgressRequest) (*MarkInProgressResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method MarkInProgress not implemented")
 }
 func (UnimplementedTaskTrackerServiceServer) mustEmbedUnimplementedTaskTrackerServiceServer() {}
 func (UnimplementedTaskTrackerServiceServer) testEmbeddedByValue()                            {}
@@ -138,6 +202,78 @@ func _TaskTrackerService_List_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TaskTrackerService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskTrackerServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskTrackerService_Update_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskTrackerServiceServer).Update(ctx, req.(*UpdateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaskTrackerService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskTrackerServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskTrackerService_Delete_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskTrackerServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaskTrackerService_MarkDone_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MarkDoneRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskTrackerServiceServer).MarkDone(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskTrackerService_MarkDone_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskTrackerServiceServer).MarkDone(ctx, req.(*MarkDoneRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TaskTrackerService_MarkInProgress_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(MarkInProgressRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TaskTrackerServiceServer).MarkInProgress(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TaskTrackerService_MarkInProgress_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TaskTrackerServiceServer).MarkInProgress(ctx, req.(*MarkInProgressRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // TaskTrackerService_ServiceDesc is the grpc.ServiceDesc for TaskTrackerService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +288,22 @@ var TaskTrackerService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "List",
 			Handler:    _TaskTrackerService_List_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _TaskTrackerService_Update_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _TaskTrackerService_Delete_Handler,
+		},
+		{
+			MethodName: "MarkDone",
+			Handler:    _TaskTrackerService_MarkDone_Handler,
+		},
+		{
+			MethodName: "MarkInProgress",
+			Handler:    _TaskTrackerService_MarkInProgress_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

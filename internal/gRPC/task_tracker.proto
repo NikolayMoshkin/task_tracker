@@ -20,7 +20,44 @@ message ListResponse {
     string tasks = 1;
 }
 
+message UpdateRequest {
+    uint64 id = 1;
+    string name = 2;
+}
+
+message UpdateResponse {
+    string result = 1;
+}
+
+message DeleteRequest {
+    uint64 id = 1;
+}
+
+message DeleteResponse {
+    string result = 1;
+}
+
+message MarkDoneRequest {
+    uint64 id = 1;
+}
+
+message MarkDoneResponse {
+    string result = 1;
+}
+
+message MarkInProgressRequest {
+    uint64 id = 1;
+}
+
+message MarkInProgressResponse {
+    string result = 1;
+}
+
 service TaskTrackerService{
     rpc Add(AddRequest) returns (AddResponse);
     rpc List(ListRequest) returns (ListResponse);
+    rpc Update(UpdateRequest) returns (UpdateResponse);
+    rpc Delete(DeleteRequest) returns (DeleteResponse);
+    rpc MarkDone(MarkDoneRequest) returns (MarkDoneResponse);
+    rpc MarkInProgress(MarkInProgressRequest) returns (MarkInProgressResponse);
 }
