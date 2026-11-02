@@ -109,74 +109,6 @@ func (x *AddResponse) GetResult() string {
 	return ""
 }
 
-type Task struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Status        string                 `protobuf:"bytes,2,opt,name=status,proto3" json:"status,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,3,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	UpdatedAt     string                 `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *Task) Reset() {
-	*x = Task{}
-	mi := &file_task_tracker_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *Task) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*Task) ProtoMessage() {}
-
-func (x *Task) ProtoReflect() protoreflect.Message {
-	mi := &file_task_tracker_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use Task.ProtoReflect.Descriptor instead.
-func (*Task) Descriptor() ([]byte, []int) {
-	return file_task_tracker_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *Task) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-func (x *Task) GetStatus() string {
-	if x != nil {
-		return x.Status
-	}
-	return ""
-}
-
-func (x *Task) GetCreatedAt() string {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return ""
-}
-
-func (x *Task) GetUpdatedAt() string {
-	if x != nil {
-		return x.UpdatedAt
-	}
-	return ""
-}
-
 type ListRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Status        string                 `protobuf:"bytes,1,opt,name=status,proto3" json:"status,omitempty"`
@@ -186,7 +118,7 @@ type ListRequest struct {
 
 func (x *ListRequest) Reset() {
 	*x = ListRequest{}
-	mi := &file_task_tracker_proto_msgTypes[3]
+	mi := &file_task_tracker_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -198,7 +130,7 @@ func (x *ListRequest) String() string {
 func (*ListRequest) ProtoMessage() {}
 
 func (x *ListRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_task_tracker_proto_msgTypes[3]
+	mi := &file_task_tracker_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -211,7 +143,7 @@ func (x *ListRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListRequest.ProtoReflect.Descriptor instead.
 func (*ListRequest) Descriptor() ([]byte, []int) {
-	return file_task_tracker_proto_rawDescGZIP(), []int{3}
+	return file_task_tracker_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *ListRequest) GetStatus() string {
@@ -223,14 +155,14 @@ func (x *ListRequest) GetStatus() string {
 
 type ListResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Task          []*Task                `protobuf:"bytes,1,rep,name=task,proto3" json:"task,omitempty"`
+	Tasks         string                 `protobuf:"bytes,1,opt,name=tasks,proto3" json:"tasks,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *ListResponse) Reset() {
 	*x = ListResponse{}
-	mi := &file_task_tracker_proto_msgTypes[4]
+	mi := &file_task_tracker_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -242,7 +174,7 @@ func (x *ListResponse) String() string {
 func (*ListResponse) ProtoMessage() {}
 
 func (x *ListResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_task_tracker_proto_msgTypes[4]
+	mi := &file_task_tracker_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -255,14 +187,14 @@ func (x *ListResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListResponse.ProtoReflect.Descriptor instead.
 func (*ListResponse) Descriptor() ([]byte, []int) {
-	return file_task_tracker_proto_rawDescGZIP(), []int{4}
+	return file_task_tracker_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *ListResponse) GetTask() []*Task {
+func (x *ListResponse) GetTasks() string {
 	if x != nil {
-		return x.Task
+		return x.Tasks
 	}
-	return nil
+	return ""
 }
 
 var File_task_tracker_proto protoreflect.FileDescriptor
@@ -274,18 +206,11 @@ const file_task_tracker_proto_rawDesc = "" +
 	"AddRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\"%\n" +
 	"\vAddResponse\x12\x16\n" +
-	"\x06result\x18\x01 \x01(\tR\x06result\"p\n" +
-	"\x04Task\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\x12\x16\n" +
-	"\x06status\x18\x02 \x01(\tR\x06status\x12\x1d\n" +
-	"\n" +
-	"created_at\x18\x03 \x01(\tR\tcreatedAt\x12\x1d\n" +
-	"\n" +
-	"updated_at\x18\x04 \x01(\tR\tupdatedAt\"%\n" +
+	"\x06result\x18\x01 \x01(\tR\x06result\"%\n" +
 	"\vListRequest\x12\x16\n" +
-	"\x06status\x18\x01 \x01(\tR\x06status\"9\n" +
-	"\fListResponse\x12)\n" +
-	"\x04task\x18\x01 \x03(\v2\x15.task_tracker_pb.TaskR\x04task2\x9b\x01\n" +
+	"\x06status\x18\x01 \x01(\tR\x06status\"$\n" +
+	"\fListResponse\x12\x14\n" +
+	"\x05tasks\x18\x01 \x01(\tR\x05tasks2\x9b\x01\n" +
 	"\x12TaskTrackerService\x12@\n" +
 	"\x03Add\x12\x1b.task_tracker_pb.AddRequest\x1a\x1c.task_tracker_pb.AddResponse\x12C\n" +
 	"\x04List\x12\x1c.task_tracker_pb.ListRequest\x1a\x1d.task_tracker_pb.ListResponseB\x13Z\x11./task_tracker_pbb\x06proto3"
@@ -302,25 +227,23 @@ func file_task_tracker_proto_rawDescGZIP() []byte {
 	return file_task_tracker_proto_rawDescData
 }
 
-var file_task_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_task_tracker_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_task_tracker_proto_goTypes = []any{
 	(*AddRequest)(nil),   // 0: task_tracker_pb.AddRequest
 	(*AddResponse)(nil),  // 1: task_tracker_pb.AddResponse
-	(*Task)(nil),         // 2: task_tracker_pb.Task
-	(*ListRequest)(nil),  // 3: task_tracker_pb.ListRequest
-	(*ListResponse)(nil), // 4: task_tracker_pb.ListResponse
+	(*ListRequest)(nil),  // 2: task_tracker_pb.ListRequest
+	(*ListResponse)(nil), // 3: task_tracker_pb.ListResponse
 }
 var file_task_tracker_proto_depIdxs = []int32{
-	2, // 0: task_tracker_pb.ListResponse.task:type_name -> task_tracker_pb.Task
-	0, // 1: task_tracker_pb.TaskTrackerService.Add:input_type -> task_tracker_pb.AddRequest
-	3, // 2: task_tracker_pb.TaskTrackerService.List:input_type -> task_tracker_pb.ListRequest
-	1, // 3: task_tracker_pb.TaskTrackerService.Add:output_type -> task_tracker_pb.AddResponse
-	4, // 4: task_tracker_pb.TaskTrackerService.List:output_type -> task_tracker_pb.ListResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	0, // 0: task_tracker_pb.TaskTrackerService.Add:input_type -> task_tracker_pb.AddRequest
+	2, // 1: task_tracker_pb.TaskTrackerService.List:input_type -> task_tracker_pb.ListRequest
+	1, // 2: task_tracker_pb.TaskTrackerService.Add:output_type -> task_tracker_pb.AddResponse
+	3, // 3: task_tracker_pb.TaskTrackerService.List:output_type -> task_tracker_pb.ListResponse
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_task_tracker_proto_init() }
@@ -334,7 +257,7 @@ func file_task_tracker_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_task_tracker_proto_rawDesc), len(file_task_tracker_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -60,17 +60,46 @@ func (s *Server) Add(ctx context.Context, in *task_tracker_pb.AddRequest) (*task
 		return nil, status.FromContextError(ctx.Err()).Err()
 	}
 }
-func (s *Server) List(ctx context.Context, in *task_tracker_pb.ListRequest) (*task_tracker_pb.ListResponse, error) {
-	tasks := []*task_tracker_pb.Task{
-		{
-			Name:      "Task 1",
-			Status:    "In Progress",
-			CreatedAt: "2024-06-01T10:00:00Z",
-			UpdatedAt: "2024-06-02T12:00:00Z",
-		},
-	}
 
-	return &task_tracker_pb.ListResponse{
-		Task: tasks,
-	}, nil
+func (s *Server) List(ctx context.Context, in *task_tracker_pb.ListRequest) (*task_tracker_pb.ListResponse, error) {
+	respCh := make(chan []byte)
+	errCh := make(chan error)
+
+	go func() {
+		defer close(respCh)
+
+		job, err := s.creator.NewJob(job.LIST)
+		if err != nil {
+			errCh <- err
+			return
+		}
+
+		taskStatus := in.Status
+
+		reader, err := job.Execute([]string{taskStatus})
+		if err != nil {
+			errCh <- err
+			return
+		}
+
+		result, err := io.ReadAll(reader)
+		if err != nil {
+			errCh <- err
+			return
+		}
+
+		respCh <- result
+	}()
+
+	select {
+	case val := <-respCh:
+		return &task_tracker_pb.ListResponse{
+			Tasks: string(val),
+		}, nil
+	case err := <-errCh:
+		slog.Error(err.Error())
+		return nil, status.Error(codes.Internal, "List task failed: "+err.Error())
+	case <-ctx.Done():
+		return nil, status.FromContextError(ctx.Err()).Err()
+	}
 }
