@@ -12,7 +12,22 @@ message AddResponse {
     string result = 1;
 }
 
+message Task {
+    string name = 1;
+    string status = 2;
+    string created_at = 3;
+    string updated_at = 4;
+}
+
+message ListRequest {
+    string status = 1;
+}
+
+message ListResponse {
+    repeated Task task = 1;
+}
+
 service TaskTrackerService{
-    // unary with deadline
     rpc Add(AddRequest) returns (AddResponse);
+    rpc List(ListRequest) returns (ListResponse);
 }
