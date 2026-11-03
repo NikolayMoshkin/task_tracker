@@ -35,6 +35,10 @@ func NewDBHandler(connStr string) (DataHandler, error) {
 		return nil, err
 	}
 
+	db.SetMaxOpenConns(20)
+	db.SetMaxIdleConns(20)
+	// db.SetConnMaxIdleTime(30 * time.Second)
+
 	return &DBHandler{db}, nil
 }
 
@@ -53,18 +57,9 @@ func (h *DBHandler) Init() error {
 func (h *DBHandler) Add(t *model.Task) (int, error) {
 	var err error
 
-	tx := h.db.MustBegin()
-	defer func() {
-		if pan := recover(); pan != nil || err != nil {
-			tx.Rollback()
-			return
-		}
-
-		tx.Commit()
-	}()
-
 	var id int
-	rows, err := tx.NamedQuery("INSERT INTO task (name, status, created_at) VALUES (:name, :status, :created_at) RETURNING id", t)
+
+	rows, err := h.db.NamedQuery("INSERT INTO task (name, status, created_at) VALUES (:name, :status, :created_at) RETURNING id", t)
 	if err != nil {
 		return 0, err
 	}
@@ -77,8 +72,6 @@ func (h *DBHandler) Add(t *model.Task) (int, error) {
 		}
 	}
 
-	tx.Commit()
-
 	return id, nil
 }
 
@@ -86,6 +79,7 @@ func (h *DBHandler) Update(id int, field string, val string) error {
 
 	var err error
 
+	// testing how to work with transactions
 	tx := h.db.MustBegin()
 	defer func() {
 		if pan := recover(); pan != nil || err != nil {

@@ -24,7 +24,6 @@ import (
 
 	"github.com/joho/godotenv"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 type App struct {
@@ -89,14 +88,32 @@ func runHttp(cr *service.Creator) {
 		IdleTimeout:  60 * time.Second,
 	}
 
+	// Тестирую работу профилировщика
+	pprofSrv := &http.Server{
+		Addr:         ":3366",
+		Handler:      web.NewRouter(cr, logger).Pprof(),
+		ReadTimeout:  5 * time.Second,
+		WriteTimeout: 10 * time.Second,
+		IdleTimeout:  60 * time.Second,
+	}
+
 	// Контекст, который отменяется по SIGINT/SIGTERM
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
 	// Запуск сервера в отдельной горутине
 	go func() {
-		logger.Info("starting server", "addr", srv.Addr)
+		logger.Info("starting server on port 8080", "addr", srv.Addr)
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			logger.Error("server error", "err", err)
+			os.Exit(1)
+		}
+	}()
+
+	// запуск профилировщика
+	go func() {
+		logger.Info("starting pprof server on port 3366", "addr", srv.Addr)
+		if err := pprofSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			logger.Error("server error", "err", err)
 			os.Exit(1)
 		}
@@ -115,6 +132,9 @@ func runHttp(cr *service.Creator) {
 		logger.Error("graceful shutdown failed", "err", err)
 		os.Exit(1)
 	}
+
+	// остановка профилировщика
+	_ = pprofSrv.Shutdown(context.Background())
 
 	logger.Info("server stopped gracefully")
 }
@@ -154,8 +174,8 @@ func runGrpc(cr *service.Creator) {
 	s := grpc.NewServer()
 	task_tracker_pb.RegisterTaskTrackerServiceServer(s, task_tracker_grpc_server.NewServer(cr))
 
-	// рефлексия для клиентов по типу evans/grpcurl
-	reflection.Register(s)
+	// рефлексия для клиентов по типу evans
+	// reflection.Register(s)
 
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
