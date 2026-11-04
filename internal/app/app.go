@@ -103,7 +103,7 @@ func runHttp(cr *service.Creator) {
 
 	// Запуск сервера в отдельной горутине
 	go func() {
-		logger.Info("starting server on port 8080", "addr", srv.Addr)
+		logger.Info("starting server", "addr", srv.Addr)
 		if err := srv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			logger.Error("server error", "err", err)
 			os.Exit(1)
@@ -112,7 +112,7 @@ func runHttp(cr *service.Creator) {
 
 	// запуск профилировщика
 	go func() {
-		logger.Info("starting pprof server on port 3366", "addr", srv.Addr)
+		logger.Info("starting pprof server", "addr", pprofSrv.Addr)
 		if err := pprofSrv.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			logger.Error("server error", "err", err)
 			os.Exit(1)
